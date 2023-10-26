@@ -1,0 +1,612 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+#include <string.h>
+
+int main() {
+    int idade, opcao, op, op1, op2, op3, opmuseu, arrecadacao;
+    float respostaOP, somaOP, respostaEstudante, somaEstudante, somaHomem, respostaHomem, somaAbaporu, respostaAbaporu, somaArtesao, respostaArtesao, somaAmigos, respostaAmigos; 
+    float somaPierrete, respostaPierrete, somaVentania, respostaVentania, mediaOP, mediaEstudante, mediaHomem, mediaAbaporu, mediaArtesao, mediaAmigos, mediaPierrete, mediaVentania;
+    float OP, Estudante, Homem, Abaporu, Artesao, Amigos, Pierrete, Ventania, QntOP, QntEstudante, QntHomem, QntAbaporu, QntArtesao, QntAmigos, QntPierrete, QntVentania;
+    char nome[50];
+    int pessoas = 0;
+    int flagtotal = 1;
+    int cheia = 0;
+    int meia = 0;
+    int gratuito = 0;
+    int ingresso = 0;
+    int flagbilheteria;
+    int flagmuseu, senha;
+
+    // Tela de Login
+    while (flagtotal == 1) {
+        OP = 0;
+        Estudante = 0;
+        Homem = 0;
+        Abaporu = 0;
+        Artesao = 0;
+        Amigos = 0;
+        Pierrete = 0;
+        Ventania = 0;
+        int flagbilheteria = 1;
+        flagmuseu = 1;
+        setlocale(LC_ALL, "Portuguese");
+        printf(" ---------------------------------------\n  SEJA BEM VINDO AO MUSEU ARTE 22 – GYN\n ---------------------------------------\n");
+        printf("\n  CADASTRE-SE PARA ENTRAR NO MUSEU\n");
+        printf("\n1 - Cadastrar\n0 - Fechar museu (Somente ADM)\n");
+        scanf("%d", &op1);
+        if (op1 == 1) {
+            getchar();
+            printf("Insira seu nome: ");
+            fgets(nome, sizeof(nome), stdin);
+            size_t len = strlen(nome);
+        if (len > 0 && nome[len - 1] == '\n') {
+        nome[len - 1] = '\0';
+    }
+        IDADE:
+            printf("\nInsira sua idade: ");
+            scanf("%d", &idade);
+            if (idade < 1 || idade > 110) {
+                printf("\nIdade inválida.\n");
+                goto IDADE;
+            }
+        } else if (op1 == 0) {
+            SENHA:printf("\n\nDigite a senha: ");
+            scanf("%d",&senha);
+            if(senha == 2023){
+            break;
+            }
+            else{
+                printf("\n\nSenha inválida. Tente novamente!\n\n");
+                goto SENHA;
+            }
+            
+        } else {
+            printf("\n\nValor inválido, tente novamente.\n\n");
+            continue;
+        }
+
+        printf("\n%s, seu cadastro foi concluído com sucesso!\n\n\n\n", nome);
+        pessoas++;
+
+        // Bilheteria
+        while (flagbilheteria != 0) {
+            printf("\n\n1 - Bilheteria\n2 - Entrar no museu\n\n");
+            scanf("%d", &op2);
+            if (op2 == 1) {
+                printf("\n\n\n\n\n--------------------------------------\n            BILHETERIA\n--------------------------------------\n");
+                printf("\n\nCondições dos ingressos\n- Meia válida somente para pessoas com idade de 7 a 18 anos.\n- Gratuidade válida somente para crianças abaixo dos 7 anos e idosos a partir dos 60 anos.\n\n");
+                printf("COMPRE SEU INGRESSO\n1 - Cheia: R$30,00\n2 - Meia: R$15,00\n3 - Gratuito: RS$00,00\n4 - Voltar\n");
+                scanf("%d", &opcao);
+                switch (opcao) {
+                    case 1:
+                        printf("Deseja confirmar a compra?\n1 - SIM\n2 - NÃO\n");
+                        scanf("%d", &op);
+                        if (op == 1) {
+                            printf("\nCompra concluída!\nAproveite o evento!!!\n");
+                            ingresso = 1;
+                            arrecadacao += 30;
+                            cheia++;
+                            continue;
+                        } else if (op == 2) {
+                            printf("\nCompra cancelada!\n\n");
+                            continue;
+                        } else {
+                            printf("\nValor inválido\n\n");
+                            continue;
+                        }
+                    case 2:
+                        if (idade >= 7 && idade <= 18) {
+                            printf("Deseja confirmar a compra?\n1 - SIM\n2 - NÃO\n");
+                            scanf("%d", &op);
+
+                            if (op == 1) {
+                                printf("\nCompra concluída!\nAproveite o evento!!!\n");
+                                arrecadacao += 15;
+                                meia++;
+                                ingresso = 1;
+                                continue;
+                            } else if (op == 2) {
+                                printf("\nCompra cancelada!\n\n");
+                                continue;
+                            } else {
+                                printf("\nValor inválido\n\n");
+                                continue;
+                            }
+                        } else {
+                            printf("\n\nA sua idade não é válida para a compra do ingresso.\n\n");
+                            continue;
+                        }
+                    case 3:
+                        if (idade < 7 || idade >= 60) {
+                            printf("Deseja confirmar a compra?\n1 - SIM\n2 - NÃO\n");
+                            scanf("%d", &op);
+
+                            if (op == 1) {
+                                printf("\nCompra concluída!\nAproveite o evento!!!\n");
+                                ingresso = 1;
+                                gratuito++;
+                                continue;
+                            } else if (op == 2) {
+                                printf("\nCompra cancelada!\n\n");
+                                continue;
+                            } else {
+                                printf("\nValor inválido\n\n");
+                                continue;
+                            }
+                            break;
+                        } else {
+                            printf("\n\nA sua idade não é válida para a compra do ingresso.\n\n");
+                            continue;
+                        }
+                        case 4:
+                        continue;
+                }
+            }
+            // VALIDADOR
+            else if (op2 == 2) {
+                printf("\n\nValidando seu ingresso...\n\n");
+                if (ingresso == 0) {
+                    printf("%s ainda não comprou ingresso!", nome);
+                    continue;
+                } else {
+                    printf("Ingresso válido. Seja bem-vindo ao museu\n\n");
+                    ingresso = 0;
+                    break;
+                }
+            } else {
+                printf("\n\nValor inválido\n\n");
+                continue;
+            }
+        }
+
+        // MUSEU
+        while (flagmuseu != 0) {
+            printf("\n\n\n\n\n-----------------------------------------\n   100 ANOS DA SEMANA DA ARTE MODERNA   \n-----------------------------------------\n\n\n\n\n-------------------- SEJA BEM-VINDO À NOSSA EXPOSIÇÃO --------------------\n\n");
+            printf("\n  -------------------------------------------------------------------------------------------------------------------\n");
+            printf(" | A Semana de Arte Moderna foi realizada no mês de fevereiro de 1922, na cidade de São Paulo. Esse evento de cunho  |\n");
+            printf(" | artístico e cultural ocorreu exatamente cem anos após a Independência do Brasil, trinta e quatro anos após o fim  |\n");
+            printf(" | da escravidão, e quatro anos após o término da Primeira Guerra Mundial. As circunstâncias históricas dessas       |\n");
+            printf(" | efemérides forneceram uma base significativa para a análise da trajetória brasileira em relação a questões        |\n");
+            printf(" | cruciais, quando comparada a outras nações que alcançaram resultados mais favoráveis.                             |\n");
+            printf(" |                                                                                                                   |\n");
+            printf(" | Essa Exposição Artística tinha como um de seus principais objetivos dar destaque a questões sociais que           |\n");
+            printf(" | frequentemente eram negligenciadas e pouco exploradas nas obras artísticas daquela época. Assuntos como a         |\n");
+            printf(" | escravidão, a independência e a recente abolição da escravatura foram trazidos à luz, proporcionando um novo      |\n");
+            printf(" | olhar sobre esses elementos históricos. Nesse sentido, o evento se baseava no pensamento nacionalista, buscando   |\n");
+            printf(" | uma identidade cultural brasileira mais autêntica e abraçando a diversidade das expressões artísticas             |\n");
+            printf(" | que compunham o país.                                                                                             |\n");
+            printf(" |                                                                                                                   |\n");
+            printf(" | Desse modo, a Semana de Arte Moderna de 1922 ultrapassou seu papel imediato e se tornou um marco icônico na cena  |\n");
+            printf(" | cultural do Brasil, moldando a evolução da arte e da identidade cultural do país nos anos seguintes. Esse evento  |\n");
+            printf(" | desempenhou um papel crucial na promoção de uma reflexão crítica sobre a história e na busca por uma expressão    |\n");
+            printf(" | artística e cultural verdadeiramente brasileira.                                                                  |\n");
+            printf("  -------------------------------------------------------------------------------------------------------------------\n");
+            printf("\n\n\n   ---------- OBRAS ----------\n\n1 - Operários - Tarsila do Amaral\n2 - A estudante - Anita Malfatti\n3 - O homem amarelo - Anita Malfatti\n4 - O Abaporu - Tarsila do Amaral\n5 - O artesão - Vicente do Rego Monteiro\n6 - O Homem de Sete Cores - Anita Malfatti\n7 - Pierrete - Di Cavalcanti\n8 - A ventania - Anita Malfatti\n9 - Sair\n\n");
+            scanf("%d", &opmuseu);
+            switch (opmuseu) {
+                case 1:
+                    printf("\n\n\n\n\n---------- OPERÁRIOS ----------\n\n\n");
+                    printf("\n  -------------------------------------------------------------------------------------------------------------------\n");
+                    printf(" | A artista Tarsila do Amaral concebeu a obra 'Os Operários' em 1933. Esta pintura é amplamente considerada como    |\n");
+                    printf(" | um símbolo representativo do período de industrialização no Brasil, abordando tanto a exploração da classe        |\n");
+                    printf(" | trabalhadora quanto a diversidade étnica que compõe nossa sociedade.                                              |\n");
+                    printf(" |                                                                                                                   |\n");
+                    printf(" | Nesta obra, Tarsila retrata de forma marcante as diversas feições dos trabalhadores e trabalhadoras das fábricas. |\n");
+                    printf(" | Ela apresenta indivíduos de diferentes cores e etnias lado a lado, e, apesar das notáveis contrastantes           |\n");
+                    printf(" | culturais, todos exibem traços de fadiga e desesperança.                                                          |\n");
+                    printf(" |                                                                                                                   |\n");
+                    printf(" | Portanto, 'Os Operários' é uma expressão significativa do movimento modernista, simbolizando a industrialização   |\n");
+                    printf(" | brasileira e representando a emergência da classe operária, formada por pessoas que migraram de várias regiões    |\n");
+                    printf(" | em busca de oportunidades de trabalho.                                                                            |\n");
+                    printf("  -------------------------------------------------------------------------------------------------------------------\n");
+                    
+                    if(OP == 0){
+                    printf("\n\nAVALIE A OBRA\n\n");
+                    OP:printf("O que você achou da obra em termos de composição e estilo?\n1) Ruim   2) Regular   3) Bom   4) Excelente\n");
+                    scanf("%f",&respostaOP);
+                    if(respostaOP <1 || respostaOP > 4){
+                        printf("\nValor inválido!\n\n");
+                        goto OP;
+                    }
+                    somaOP += respostaOP;
+                    QntOP ++;
+                    }
+                    OP = 1;
+                    printf("\n\n1 para voltar <-- | --> 2 ir para a próxima obra\n\n");
+                    scanf("%d", &op3);
+                    if (op3 == 1) {
+                        continue;
+                    } else {
+                    }
+                case 2:
+                    printf("\n\n\n\n---------- A ESTUDANTE ----------\n\n\n");
+                    printf("\n  -------------------------------------------------------------------------------------------------------------------\n");
+                    printf(" | 'A Estudante' é uma icônica pintura feita em 1915, concebida pela pintora Anita Malfatti. Nesta obra, vemos uma   |\n");
+                    printf(" | jovem mulher dedicada aos seus estudos, tornando-se um exemplo da estética acadêmica da época. A tela retrata     |\n");
+                    printf(" | uma estudante elegantemente vestida, profundamente absorvida em seus livros, simbolizando a busca pelo            |\n");
+                    printf(" | conhecimento e a educação.                                                                                        |\n");
+                    printf(" |                                                                                                                   |\n");
+                    printf(" | A obra capta a idealização do papel da educação feminina que ganhou destaque no século XIX, quando a sociedade    |\n");
+                    printf(" | começou a reconhecer o valor do aprendizado para as mulheres. A paleta de cores suaves e a meticulosa atenção aos |\n");
+                    printf(" | detalhes conferem à obra uma sensação de paz e tranquilidade, enfatizando o estudo como um nobre empreendimento.  |\n");
+                    printf(" |                                                                                                                   |\n");
+                    printf(" | Essa pintura é um exemplo de como a arte pode refletir os valores e ideais de uma era. “A Estudante” perdura como |\n");
+                    printf(" | um testemunho da evolução do papel das mulheres na sociedade e da crescente importância da educação no processo   |\n");
+                    printf(" | de empoderamento feminino.                                                                                        |\n");
+                    printf("  -------------------------------------------------------------------------------------------------------------------\n");       
+                    
+                    if(Estudante == 0){
+                    printf("\n\nAVALIE A OBRA\n\n");
+                    ES:printf("O que você achou da obra em termos de composição e estilo?\n1) Ruim   2) Regular   3) Bom   4) Excelente\n");
+                    scanf("%f",&respostaEstudante);
+                    if(respostaEstudante <1 || respostaEstudante > 4){
+                        printf("\nValor inválido!\n\n");
+                        goto ES;
+                    }
+                    somaEstudante += respostaEstudante;
+                    QntEstudante ++;
+                    }
+                    Estudante = 1;
+                    printf("\n\n1 para voltar <-- | --> 2 ir para a próxima obra\n\n");
+                    scanf("%d", &op3);
+                    if (op3 == 1) {
+                        continue;
+                    } else {
+                    }
+                case 3:
+                    printf("\n\n\n\n ---------- O HOMEM AMARELO ----------\n\n\n");
+                    printf("\n  -------------------------------------------------------------------------------------------------------------------\n");
+                    printf(" | A pintura “O Homem Amarelo” é uma das obras mais emblemáticas da renomada artista brasileira Anita Malfatti, uma  |\n");
+                    printf(" | figura central no movimento da arte moderna no Brasil. Ela apresentou essa obra pela primeira vez na Exposição    |\n");
+                    printf(" | de 1917 e, mais tarde, na Semana de Arte Moderna de 1922, dois eventos que tiveram um papel crucial na            |\n");
+                    printf(" | transformação da cena artística brasileira.                                                                       |\n");
+                    printf(" |                                                                                                                   |\n");
+                    printf(" | A versão atual de “O Homem Amarelo” representa uma reinterpretação da peça original que Anita produziu durante    |\n");
+                    printf(" | seu período de estudo nos Estados Unidos. A pintura é notável por sua abordagem ousada e inovadora, incorporando  |\n");
+                    printf(" | influências impressionistas e expressionistas. Malfatti desafiou as normas artísticas convencionais da época,     |\n");
+                    printf(" | desencadeando debates intensos sobre a modernidade na arte brasileira. Seu trabalho teve um impacto duradouro no  |\n");
+                    printf(" | desenvolvimento da arte moderna no Brasil, abrindo caminho para novas perspectivas e artistas talentosos.         |\n");
+                    printf("  -------------------------------------------------------------------------------------------------------------------\n");                    
+                    if(Homem == 0){
+                    printf("\n\nAVALIE A OBRA\n\n");
+                    HO:printf("O que você achou da obra em termos de composição e estilo?\n1) Ruim   2) Regular   3) Bom   4) Excelente\n");
+                    scanf("%f",&respostaHomem);
+                    if(respostaHomem <1 || respostaHomem > 4){
+                        printf("\nValor inválido!\n\n");
+                        goto HO;
+                    }
+                    somaHomem += respostaHomem;
+                    QntHomem ++;
+                    }
+                    Homem = 1;
+                    printf("\n\n1 para voltar <-- | --> 2 ir para a próxima obra\n\n");
+                    scanf("%d", &op3);
+                    if (op3 == 1) {
+                        continue;
+                    } else {
+                    }
+                case 4:
+                    printf("\n\n\n\n ---------- O Abaporu ----------\n\n\n");
+                    printf("\n  -------------------------------------------------------------------------------------------------------------------\n");
+                    printf(" | A renomada artista Tarsila do Amaral concebeu a obra intitulada 'O Abaporu' em janeiro de 1928. A expressão       |\n");
+                    printf(" | 'Abaporu' tem suas raízes nas origens tupi-guaranis e significa 'homem que se alimenta de gente'. Essa pintura    |\n");
+                    printf(" | foi realizada em óleo e apresenta as características distintivas do estilo da artista, caracterizado por cores    |\n");
+                    printf(" | vibrantes e a representação de personagens que parecem transcender a realidade, ou seja, uma espécie de           |\n");
+                    printf(" | 'desumanização da Arte'.                                                                                          |\n");
+                    printf(" |                                                                                                                   |\n");
+                    printf(" | Ao fazer a análise da obra, é possível perceber que o homem retratado possui extremidades  (pés e mãos)           |\n");
+                    printf(" | desproporcionalmente grandes, provavelmente fazendo alusão ao trabalho braçal que prevalecia na sociedade         |\n");
+                    printf(" | brasileira da época. A pequena dimensão da cabeça pode ser interpretada como um símbolo da ausência de            |\n");
+                    printf(" | pensamento crítico que caracterizava a população, frequentemente tomada por decisões precipitadas e desprovidas   |\n");
+                    printf(" | de uma abordagem conciliadora.                                                                                    |\n");
+                    printf(" |                                                                                                                   |\n");
+                    printf(" | 'O Abaporu' desempenhou um papel de destaque no movimento antropofágico, que se baseava na assimilação e          |\n");
+                    printf(" | adaptação da arte europeia à cultura brasileira. Esse movimento culminou na criação de uma nova expressão         |\n");
+                    printf(" | artística que genuinamente representasse a identidade cultural do Brasil.                                         |\n");
+                    printf("  -------------------------------------------------------------------------------------------------------------------\n");                    
+                    if(Abaporu == 0){
+                    printf("\n\nAVALIE A OBRA\n\n");
+                    AB:printf("O que você achou da obra em termos de composição e estilo?\n1) Ruim   2) Regular   3) Bom   4) Excelente\n");
+                    scanf("%f",&respostaAbaporu);
+                    if(respostaAbaporu <1 || respostaAbaporu > 4){
+                        printf("\nValor inválido!\n\n");
+                        goto AB;
+                    }
+                    somaAbaporu += respostaAbaporu;
+                    QntAbaporu ++;
+                    }
+                    Abaporu = 1;
+                    printf("\n\n1 para voltar <-- | --> 2 ir para a próxima obra\n\n");
+                    scanf("%d", &op3);
+                    if (op3 == 1) {
+                        continue;
+                    } else {
+                    }
+                case 5:
+                    printf("\n\n\n\n ---------- O ARTESÃO ----------\n\n\n");
+                    printf("\n  -------------------------------------------------------------------------------------------------------------------\n");
+                    printf(" | A obra O Artesão, de Vicente do Rego Monteiro, de 1922, é um exemplo marcante da influência do movimento          |\n");
+                    printf(" | modernista no cenário artístico brasileiro da época. A pintura representa uma expressão do trabalho e da cultura  |\n");
+                    printf(" | popular ao retratar um trabalhador de chapéu descansando ou esperando que potenciais compradores comprem suas     |\n");
+                    printf(" | peças de cerâmica. A presença de vasos de terracota ao seu redor reforça a temática artística do ofício manual    |\n");
+                    printf(" | e do artesanato.                                                                                                  |\n");
+                    printf(" |                                                                                                                   |\n");
+                    printf(" | Vicente do Rego Monteiro escolheu uma paleta de tons discretos, destacando castanhos, vermelhos, laranjas e       |\n");
+                    printf(" | cinzas para criar uma atmosfera que ressoa com simplicidade e profundidade. O artista adiciona com sucesso uma    |\n");
+                    printf(" | sensação de mistério à cena, criando uma sensação de enigma e introspecção que convida o observador a contemplar  |\n");
+                    printf(" | o significado subjacente da obra.                                                                                 |\n");
+                    printf(" |                                                                                                                   |\n");
+                    printf(" | Além de representar um momento do cotidiano dos trabalhadores, a pintura também reflete os ideais modernistas do  |\n");
+                    printf(" | Brasil do início do século XX. Esta obra de arte testemunha a evolução do movimento artístico do país e a busca   |\n");
+                    printf(" | por expressões autênticas da cultura e do trabalho brasileiro.                                                    |\n");
+                    printf("  -------------------------------------------------------------------------------------------------------------------\n");                    
+                    if(Artesao == 0){
+                    printf("\n\nAVALIE A OBRA\n\n");
+                    AR:printf("O que você achou da obra em termos de composição e estilo?\n1) Ruim   2) Regular   3) Bom   4) Excelente\n");
+                    scanf("%f",&respostaArtesao);
+                    if(respostaArtesao <1 || respostaArtesao > 4){
+                        printf("\nValor inválido!\n\n");
+                        goto AR;
+                    }
+                    somaArtesao += respostaArtesao;
+                    QntArtesao ++;
+                    }
+                    Artesao = 1;
+                    printf("\n\n1 para voltar <-- | --> 2 ir para a próxima obra\n\n");
+                    scanf("%d", &op3);
+                    if (op3 == 1) {
+                        continue;
+                    } else {
+                    }
+                case 6:
+                    printf("\n\n\n\n ---------- O Homem de Sete Cores ----------\n\n\n");
+                    printf("\n  -------------------------------------------------------------------------------------------------------------------\n");
+                    printf(" | Obra 'O Homem de Sete Cores' Pintado em 1918 por Anita Malfatti, é amplamente reconhecido como uma das            |\n");
+                    printf(" | contribuições mais proeminentes ao movimento modernista brasileiro, que desempenhou um papel importante na        |\n");
+                    printf(" | transformação da arte e da cultura brasileira no início do século XX.                                             |\n");
+                    printf(" |                                                                                                                   |\n");
+                    printf(" | Esta notável pintura retrata um homem com os braços estendidos e a cabeça erguida, rodeado por uma rica paleta de |\n");
+                    printf(" | cores que se misturam de forma vibrante e expressiva para criar um design único e atraente. Anita Malfatti        |\n");
+                    printf(" | demonstra suas habilidades explorando as interseções de cor e forma para criar um trabalho que não apenas desafia |\n");
+                    printf(" | as normas tradicionais de representação, mas também evoca uma sensação de vibração e energia. Cada sombra e       |\n");
+                    printf(" | linha neste retrato cria uma experiência visual rica e envolvente e destaca o domínio do artista na linguagem     |\n");
+                    printf(" | da pintura.                                                                                                       |\n");
+                    printf(" |                                                                                                                   |\n");
+                    printf(" | Uma qualidade notável das obras de Anita Malfatti foi a tendência de transcender os limites convencionais da tela.|\n");
+                    printf(" | Esta pintura mostra que a figura não se limita totalmente à moldura, apenas é visível parte da cabeça mostrando o |\n");
+                    printf(" | queixo e parte da boca, contrariando as práticas estéticas tradicionais. A mesma coisa acontece com a perna       |\n");
+                    printf(" | esquerda. Anita Malfatti não se limitou às normas do seu tempo, mas procurou criar a sua expressão artística      |\n");
+                    printf(" | contra as regras do seu tempo.                                                                                    |\n");
+                    printf("  -------------------------------------------------------------------------------------------------------------------\n");                    
+                    if(Amigos == 0){
+                    printf("\n\nAVALIE A OBRA\n\n");
+                    AM:printf("O que você achou da obra em termos de composição e estilo?\n1) Ruim   2) Regular   3) Bom   4) Excelente\n");
+                    scanf("%f",&respostaAmigos);
+                    if(respostaAmigos <1 || respostaAmigos > 4){
+                        printf("\nValor inválido!\n\n");
+                        goto AM;
+                    }
+                    somaAmigos += respostaAmigos;
+                    QntAmigos ++;
+                    }
+                    Estudante = 1;
+                    printf("\n\n1 para voltar <-- | --> 2 ir para a próxima obra\n\n");
+                    scanf("%d", &op3);
+                    if (op3 == 1) {
+                        continue;
+                    } else {
+                    }
+                case 7:
+                    printf("\n\n\n\n ---------- PIERRETE ----------\n\n\n");
+                    printf("\n  -------------------------------------------------------------------------------------------------------------------\n");
+                    printf(" | A obra 'Pierrete', criada pelo artista Di Cavalcanti em 1922, destaca-se como um marcante exemplar do primeiro    |\n");
+                    printf(" | período modernista no Brasil, uma época que presenciou profundas transformações artísticas e culturais.           |\n");
+                    printf(" |                                                                                                                   |\n");
+                    printf(" | Nesta pintura, é retratada uma jovem vestida no estilo Pierrot, figura emblemática associada ao carnaval e à      |\n");
+                    printf(" | comédia. A figura da moça é representada de forma serena, transmitindo uma expressão melancólica, ao mesmo tempo  |\n");
+                    printf(" | em que seu corpo sugere um movimento de dança, conferindo à composição um elemento de leveza. A obra ainda inclui |\n");
+                    printf(" | a presença de pássaros voando em direção à personagem, bem como vasos de flores dispostos no canto,               |\n");
+                    printf(" | proporcionando um toque poético à cena.                                                                           |\n");
+                    printf(" |                                                                                                                   |\n");
+                    printf(" | Observa-se o uso da técnica da tinta a óleo, evidenciando-se linhas sinuosas e elementos característicos do       |\n");
+                    printf(" | estilo Art Nouveau. Essa influência enriquece a obra, conferindo-lhe uma dimensão estilística e estética          |\n");
+                    printf(" | singular. A obra destaca-se por retratar de forma brilhante o contexto histórico e o empenho do artista em        |\n");
+                    printf(" | explorar novas vertentes expressivas. Sua produção reflete a dinamicidade e a inovação presentes nos primórdios   |\n");
+                    printf(" | do movimento modernista no Brasil, contribuindo para o progresso da arte no país.                                 |\n");
+                    printf("  -------------------------------------------------------------------------------------------------------------------\n");                    
+                    if(Pierrete == 0){
+                    printf("\n\nAVALIE A OBRA\n\n");
+                    PI:printf("O que você achou da obra em termos de composição e estilo?\n1) Ruim   2) Regular   3) Bom   4) Excelente\n");
+                    scanf("%f",&respostaPierrete);
+                    if(respostaPierrete <1 || respostaPierrete > 4){
+                        printf("\nValor inválido!\n\n");
+                        goto PI;
+                    }
+                    somaPierrete += respostaPierrete;
+                    QntPierrete ++;
+                    }
+                    Pierrete = 1;
+                    printf("\n\n1 para voltar <-- | --> 2 ir para a próxima obra\n\n");
+                    scanf("%d", &op3);
+                    if (op3 == 1) {
+                        continue;
+                    } else {
+                    }
+                case 8:
+                    printf("\n\n\n\n ---------- A VENTANIA ----------\n\n\n");
+                    printf("\n  -------------------------------------------------------------------------------------------------------------------\n");
+                    printf(" | A obra 'A Ventania', criada pela talentosa artista Anita Malfatti em 1915, apresenta uma composição notável que   |\n");
+                    printf(" | revela a influência do renomado pintor holandês Vincent van Gogh. Essa influência se manifesta por meio de        |\n");
+                    printf(" | pinceladas espessas e rápidas, aplicadas de maneira marcante, resultando em uma experiência visual singular.      |\n");
+                    printf(" |                                                                                                                   |\n");
+                    printf(" | O vento, elemento central da obra, desempenha um papel de extrema importância na composição, revelando sua        |\n");
+                    printf(" | poderosa força que impacta toda a pintura. 'A Ventania' transmite a sensação iminente de surpresa diante de uma   |\n");
+                    printf(" | tempestade, onde ventos extremamente fortes e um céu escurecido são capturados por meio das pinceladas e manchas  |\n");
+                    printf(" | de cor. A técnica de Malfatti confere movimento e dinamismo à obra, à medida que o vento parece varrer            |\n");
+                    printf(" | intensamente a cena.                                                                                              |\n");
+                    printf(" |                                                                                                                   |\n");
+                    printf(" | Essa pintura é uma realização de destaque de Anita Malfatti, mostrando sua habilidade em criar uma experiência    |\n");
+                    printf(" | sensorial imersiva e transmitir a intensidade das forças da natureza através de sua técnica artística. A obra     |\n");
+                    printf(" | também revela a influência de artistas renomados em seu trabalho, evidenciando a riqueza da história da arte      |\n");
+                    printf(" | como uma fonte de inspiração para os artistas modernistas brasileiros.                                            |\n");
+                    printf("  -------------------------------------------------------------------------------------------------------------------\n");                    
+                    if(Ventania == 0){
+                    printf("\n\nAVALIE A OBRA\n\n");
+                    VE:printf("O que você achou da obra em termos de composição e estilo?\n1) Ruim   2) Regular   3) Bom   4) Excelente\n");
+                    scanf("%f",&respostaVentania);
+                    if(respostaVentania <1 || respostaVentania > 4){
+                        printf("\nValor inválido!\n\n");
+                        goto VE;
+                    }
+                    somaVentania += respostaVentania;
+                    QntVentania ++;
+                    }
+                    Ventania = 1;
+                    printf("\n\n1 para voltar <--\n\n");
+                    scanf("%d", &op3);
+                    if (op3 == 1) {
+                        continue;
+                    } else {
+                        continue;
+                    }
+                case 9:
+                    flagmuseu = 0;
+                
+                default:
+                continue;
+            }
+        }
+
+    SAIR:
+        printf("\n\nDigite 1 para sair do Museu\n");
+        scanf("%d", &flagtotal);
+        if (flagtotal != 1) {
+            goto SAIR;
+        }
+    }
+    
+    printf("\n\nO relatório que mostra as estatísticas do museu foi exportado para seu dispositivo com o nome relatorio.csv");
+    
+//SAIDA DO ARQUIVO
+    
+    FILE *arquivo = fopen("relatorio.csv", "w");
+if (arquivo == NULL) {
+    printf("Erro ao criar o arquivo CSV.\n");
+    return 1;
+}
+ 
+fprintf(arquivo, "RELATÓRIO DO MUSEU\n\n");
+
+fprintf(arquivo, "INGRESSOS, VALORES E PESSOAS\n");
+fprintf(arquivo, "Quantidade de Pessoas: %d\n",pessoas);
+fprintf(arquivo, "Valor arrecadado: %d\n",arrecadacao);
+fprintf(arquivo, "Ingressos Vendidos (Cheia + Meia): %d\n",cheia + meia);
+fprintf(arquivo, "Quantidade de entradas cheias : %d\n",cheia);
+fprintf(arquivo, "Quantidade de entradas meias : %d\n",meia);
+fprintf(arquivo, "Quantidade de entradas gratuitas: %d\n\n\n",gratuito);
+
+fprintf(arquivo, "DESEMPENHO E AVALIAÇÃO DAS OBRAS\n");
+
+//Operários
+fprintf(arquivo, "Média de avaliação da obra Operários: %.2f\n", somaOP/QntOP);
+if((somaOP/QntOP) <= 2){
+    fprintf(arquivo, "As avaliações da obra não foram positivas, é aconselhável revisá-lo e melhorar sua apresentação para ficar mais agradável ao público.\n\n");
+}
+else if((somaOP/QntOP) > 2 && (somaOP/QntOP) < 3){
+    fprintf(arquivo, "As avaliações da obra foram medianas, a recomendação é otimizar as informações para deixá-las mais fáceis de entender.\n\n");
+}
+else{
+    fprintf(arquivo, "As avaliações da obra foram positivas, a apresentação da obra foi ótima use de exemplo para as demais.\n\n");
+}
+
+//Estudante
+fprintf(arquivo, "Média de avaliação da obra Estudante: %.2f\n", somaEstudante/QntEstudante);
+if((somaEstudante/QntEstudante) <= 2){
+    fprintf(arquivo, "As avaliações da obra não foram positivas, é aconselhável revisá-lo e melhorar sua apresentação para ficar mais agradável ao público.\n\n");
+}
+else if((somaEstudante/QntEstudante) > 2 && (somaEstudante/QntEstudante) < 3){
+    fprintf(arquivo, "As avaliações da obra foram medianas, a recomendação é otimizar as informações para deixá-las mais fáceis de entender.\n\n");
+}
+else{
+    fprintf(arquivo, "As avaliações da obra foram positivas, a apresentação da obra foi ótima use de exemplo para as demais.\n\n");
+}
+
+//O Homem Amarelo
+fprintf(arquivo, "Média de avaliação da obra O Homeme Amarelo: %.2f\n", somaHomem/QntHomem);
+if((somaHomem/QntHomem) <= 2){
+    fprintf(arquivo, "As avaliações da obra não foram positivas, é aconselhável revisá-lo e melhorar sua apresentação para ficar mais agradável ao público.\n\n");
+}
+else if((somaHomem/QntHomem) > 2 && (somaHomem/QntHomem) < 3){
+    fprintf(arquivo, "As avaliações da obra foram medianas, a recomendação é otimizar as informações para deixá-las mais fáceis de entender.\n\n");
+}
+else{
+    fprintf(arquivo, "As avaliações da obra foram positivas, a apresentação da obra foi ótima use de exemplo para as demais.\n\n");
+}
+
+//O Abaporu
+fprintf(arquivo, "Média de avaliação da obra O Abaporu: %.2f\n", somaAbaporu/QntAbaporu);
+if((somaAbaporu/QntAbaporu) <= 2){
+    fprintf(arquivo, "As avaliações da obra não foram positivas, é aconselhável revisá-lo e melhorar sua apresentação para ficar mais agradável ao público.\n\n");
+}
+else if((somaAbaporu/QntAbaporu) > 2 && (somaAbaporu/QntAbaporu) < 3){
+    fprintf(arquivo, "As avaliações da obra foram medianas, a recomendação é otimizar as informações para deixá-las mais fáceis de entender.\n\n");
+}
+else{
+    fprintf(arquivo, "As avaliações da obra foram positivas, a apresentação da obra foi ótima use de exemplo para as demais.\n\n");
+}
+
+//O Artesão
+fprintf(arquivo, "Média de avaliação da obra O Artesão: %.2f\n", somaArtesao/QntArtesao);
+if((somaArtesao/QntArtesao) <= 2){
+    fprintf(arquivo, "As avaliações da obra não foram positivas, é aconselhável revisá-lo e melhorar sua apresentação para ficar mais agradável ao público.\n\n");
+}
+else if((somaArtesao/QntArtesao) > 2 && (somaArtesao/QntArtesao) < 3){
+    fprintf(arquivo, "As avaliações da obra foram medianas, a recomendação é otimizar as informações para deixá-las mais fáceis de entender.\n\n");
+}
+else{
+    fprintf(arquivo, "As avaliações da obra foram positivas, a apresentação da obra foi ótima use de exemplo para as demais.\n\n");
+}
+
+//O Homem de Sete Cores
+fprintf(arquivo, "Média de avaliação da obra O Homem de Sete Cores: %.2f\n", somaAmigos/QntAmigos);
+if((somaAmigos/QntAmigos) <= 2){
+    fprintf(arquivo, "As avaliações da obra não foram positivas, é aconselhável revisá-lo e melhorar sua apresentação para ficar mais agradável ao público.\n\n");
+}
+else if((somaAmigos/QntAmigos) > 2 && (somaAmigos/QntAmigos) < 3){
+    fprintf(arquivo, "As avaliações da obra foram medianas, a recomendação é otimizar as informações para deixá-las mais fáceis de entender.\n\n");
+}
+else{
+    fprintf(arquivo, "As avaliações da obra foram positivas, a apresentação da obra foi ótima use de exemplo para as demais.\n\n");
+}
+
+//Pierrete
+fprintf(arquivo, "Média de avaliação da obra Pierrete: %.2f\n", somaPierrete/QntPierrete);
+if((somaPierrete/QntPierrete) <= 2){
+    fprintf(arquivo, "As avaliações da obra não foram positivas, é aconselhável revisá-lo e melhorar sua apresentação para ficar mais agradável ao público.\n\n");
+}
+else if((somaPierrete/QntPierrete) > 2 && (somaPierrete/QntPierrete) < 3){
+    fprintf(arquivo, "As avaliações da obra foram medianas, a recomendação é otimizar as informações para deixá-las mais fáceis de entender.\n\n");
+}
+else{
+    fprintf(arquivo, "As avaliações da obra foram positivas, a apresentação da obra foi ótima use de exemplo para as demais.\n\n");
+}
+
+//Ventania
+fprintf(arquivo, "Média de avaliação da obra Ventania: %.2f\n", somaVentania/QntVentania);
+if((somaVentania/QntVentania) <= 2){
+    fprintf(arquivo, "As avaliações da obra não foram positivas, é aconselhável revisá-lo e melhorar sua apresentação para ficar mais agradável ao público.\n\n");
+}
+else if((somaVentania/QntVentania) > 2 && (somaVentania/QntVentania) < 3){
+    fprintf(arquivo, "As avaliações da obra foram medianas, a recomendação é otimizar as informações para deixá-las mais fáceis de entender.\n\n");
+}
+else{
+    fprintf(arquivo, "As avaliações da obra foram positivas, a apresentação da obra foi ótima use de exemplo para as demais.\n\n");
+}
+fclose(arquivo);
+    
+
+    return 0;
+}
+
+
